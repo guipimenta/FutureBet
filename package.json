@@ -1,0 +1,28 @@
+{
+  "name": "futurebet",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guipimenta/FutureBet.git"
+  },
+  "author": "Guilherme",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guipimenta/FutureBet/issues"
+  },
+  "homepage": "https://github.com/guipimenta/FutureBet#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2"
+  },
+  "devDependencies": {
+    "mongoose": "^4.9.6",
+    "orm": "^3.2.3",
+    "sqlite3": "^3.1.8"
+  }
+}
