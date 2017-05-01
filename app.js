@@ -2,13 +2,13 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var connect = require('./db');
 var User = require('./models/user');
-var Game = require('./models/game').model;
+var Match = require('./models/match').model;
 
 var mongoose = require('mongoose');
 
 var app = express();
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', express.static('public'));
 app.use('/static', express.static('bower_components'));
@@ -50,31 +50,31 @@ app.post('/users/new', function(req, res) {
 
 app.get('/bets/new', function(req, res) {
 	User.find({username: 'sorregot'}, function(err, users) {
-		console.log(users);
-		Game.find({}, function(err, games) {
-			users[0].bets.push({
+		Match.find({}, function(err, matches) {
+			matches[0].bets.push({
 				_id: mongoose.Types.ObjectId(),
-				game: games[0],
+				user_id: users[0].id,
 				value: 10,
 				qty: 10,
 				side: 'buy'
 			});
-			users[0].save(function(err){
-				res.send("ok");
-			});
+			matches[0].save(function(err){
+				if(err) throw err;
+				res.send("Bet registered");
+			})
 		});
 	});
 });
 
 app.get('/bets', function(req, res) {
-	User.find({username: 'sorregot'}, function(err, users) {
-		res.send(users[0].bets);
+	Match.find({}, function(err, matches) {
+		res.send(matches[0].bets);
 	});
 });
 
 
-app.get('/games/new' , function(req, res) {
-	new Game({
+app.get('/match/new' , function(req, res) {
+	new Match({
 		_id: mongoose.Types.ObjectId(),
 		name: "Champions",
 		date: Date.now(),
@@ -82,7 +82,7 @@ app.get('/games/new' , function(req, res) {
 		away: "Real de Madrid"
 	}).save(function(err) {
 		if(err) throw err;
-		res.send("Game created!");
+		res.send("Match created!");
 	})
 });
 

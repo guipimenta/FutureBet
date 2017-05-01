@@ -1,20 +1,22 @@
 var mongoose = require('mongoose');
+var betSchema = require('./bet').schema;
 var Schema = mongoose.Schema;
 
 
-var gameSchema = new Schema({
+var matchSchema = new Schema({
 	_id: { type: Schema.Types.ObjectId, required: true, unique: true },
 	name: String,
 	date: Date,
 	home: String,
-	away: String
+	away: String,
+	bets: [betSchema]
 });
 
 // the schema is useless so far
 // we need to create a model using it
-var Game = mongoose.model('Game', gameSchema);
+var Match = mongoose.model('Match', matchSchema);
 
 module.exports = {
-	model: Game,
-	schema: gameSchema
+	model: Match,
+	schema: matchSchema
 };
