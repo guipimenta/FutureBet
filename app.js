@@ -21,68 +21,71 @@ connect()
 		});
 	});
 
-
-app.get('/users/search/:name', function(req, res) {
-	var name = req.params.name
-	console.log('here');
-	User.find({}, function(err, users) {
-	  if (err) throw err;
-	  res.send(users);
-	});
-});
-
-
-app.post('/users/new', function(req, res) {
-	var id = mongoose.Types.ObjectId();
-	console.log(id);
-	new User({
-		_id: id,
-		username: req.body.name,
-		password: req.body.password,
-		created_at: Date.now()
-	}).save(function(err) {
-		if (err) throw err;
-		res.send("hello " + req.body.name);
-	});
-});
-
-
-
-app.get('/bets/new', function(req, res) {
-	User.find({username: 'sorregot'}, function(err, users) {
-		Match.find({}, function(err, matches) {
-			matches[0].bets.push({
-				_id: mongoose.Types.ObjectId(),
-				user_id: users[0].id,
-				value: 10,
-				qty: 10,
-				side: 'buy'
-			});
-			matches[0].save(function(err){
-				if(err) throw err;
-				res.send("Bet registered");
-			})
-		});
-	});
-});
-
-app.get('/bets', function(req, res) {
+app.get('/show/bets', function(req, res) {
 	Match.find({}, function(err, matches) {
 		res.send(matches[0].bets);
 	});
 });
 
-
-app.get('/match/new' , function(req, res) {
-	new Match({
-		_id: mongoose.Types.ObjectId(),
-		name: "Champions",
-		date: Date.now(),
-		home: "Athletico de Madrid",
-		away: "Real de Madrid"
-	}).save(function(err) {
-		if(err) throw err;
-		res.send("Match created!");
-	})
+app.all('/*', function(req, res, next) {
+    res.sendFile('./public/index.html', { root: __dirname });
 });
+
+// app.get('/users/search/:name', function(req, res) {
+// 	var name = req.params.name
+// 	console.log('here');
+// 	User.find({}, function(err, users) {
+// 	  if (err) throw err;
+// 	  res.send(users);
+// 	});
+// });
+
+
+// app.post('/users/new', function(req, res) {
+// 	var id = mongoose.Types.ObjectId();
+// 	console.log(id);
+// 	new User({
+// 		_id: id,
+// 		username: req.body.name,
+// 		password: req.body.password,
+// 		created_at: Date.now()
+// 	}).save(function(err) {
+// 		if (err) throw err;
+// 		res.send("hello " + req.body.name);
+// 	});
+// });
+
+
+
+// app.get('/bets/new', function(req, res) {
+// 	User.find({username: 'sorregot'}, function(err, users) {
+// 		Match.find({}, function(err, matches) {
+// 			matches[0].bets.push({
+// 				_id: mongoose.Types.ObjectId(),
+// 				user_id: users[0].id,
+// 				value: 10,
+// 				qty: 10,
+// 				side: 'buy'
+// 			});
+// 			matches[0].save(function(err){
+// 				if(err) throw err;
+// 				res.send("Bet registered");
+// 			})
+// 		});
+// 	});
+// });
+
+
+// app.get('/match/new' , function(req, res) {
+// 	new Match({
+// 		_id: mongoose.Types.ObjectId(),
+// 		name: "Champions",
+// 		date: Date.now(),
+// 		home: "Athletico de Madrid",
+// 		away: "Real de Madrid"
+// 	}).save(function(err) {
+// 		if(err) throw err;
+// 		res.send("Match created!");
+// 	})
+// });
 
