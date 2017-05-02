@@ -30,7 +30,6 @@ app.get('/bets/all/:id', function(req, res) {
 		.find({match_id: req.params.id})
 		.populate('user_id', 'username')
 		.exec(function(err, bets) {
-			console.log(bets);
 			res.send(bets);
 		});
 });
