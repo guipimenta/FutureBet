@@ -12,6 +12,10 @@ var matchSchema = new Schema({
 	bets: [{type: Schema.Types.ObjectId, ref:'Bet'}]
 });
 
+matchSchema.methods.getMatchName = function() {
+	return this.name + " - " + this.home + " x " + this.away;
+}
+
 // the schema is useless so far
 // we need to create a model using it
 var Match = mongoose.model('Match', matchSchema);

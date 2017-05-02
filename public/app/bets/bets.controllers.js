@@ -14,11 +14,13 @@
 	function BetsController(Bet, $routeParams) {
 		var vm = this;
 		vm.bets = [];
+		vm.matchName = "";
 		activate();
 
 		function activate() {
-			Bet.query({id: $routeParams.id}, function(data) {
-				vm.bets = data;
+			Bet.get({id: $routeParams.id}, function(data) {
+				vm.bets = data.bets;
+				vm.matchName = data.matchName;
 			});
 		}
 	}

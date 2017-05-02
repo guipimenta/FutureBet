@@ -9,6 +9,11 @@
     ];
 
     function Bet($resource){ 
-    	return $resource('bets/all/:id');
+    	return $resource('bets/all/:id', {}, {
+            get: {
+                url: 'bets/all/:id',
+                method: 'get'
+            }
+        });
     }
 })();
