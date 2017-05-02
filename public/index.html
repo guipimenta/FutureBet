@@ -6,29 +6,27 @@
 		<script src="/static/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script src="/static/angular/angular.min.js"></script>
 		<script src="/static/angular-route/angular-route.min.js"></script>
+		<script src="/static/angular-resource/angular-resource.min.js"></script>
+		<style>
+			body { padding-top:70px }
+		</style>
+
+
 		<base href="/">
 	</head>
 	<body>
-		<h1>Betting app</h1>
-		<a href="bets">Bets</a>
-
-		<div ng-view></div>
-
-		<!--<form action="/users/new" method="post">
-		  <div class="form-group">
-		    <label for="name">Name</label>
-		    <input type="text" class="form-control" id="name" placeholder="name" name="name">
-		  </div>
-		  <div class="form-group">
-		    <label for="password">Password</label>
-		    <input type="password" class="form-control" id="password" placeholder="password" name="password">
-		  </div>
-		  <button type="submit" class="btn btn-default">Submit</button>
-		</form>-->
-
+	<div ng-include src="'partials/navbar/navbar.html'"></div>
+		<div class="container">
+			<div ng-view></div>
+		</div>
 		<script src="app/app.js"></script>
+		<script src="app/bets/bets.resources.js"></script>
 		<script src="app/bets/bets.controllers.js"></script>
 		<script src="app/bets/bets.routes.js"></script>
+
+		<script src="app/matches/matches.resources.js"></script>
+		<script src="app/matches/matches.controllers.js"></script>
+		<script src="app/matches/matches.routes.js"></script>
 
 	</body>
 </html>

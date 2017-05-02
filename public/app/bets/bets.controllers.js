@@ -5,9 +5,21 @@
 		.module(APP_NAME)
 		.controller('BetsController', BetsController);
 
-	function BetsController() {
-		var vm = this;
+	BetsController
+		.$inject = [
+			'Bet',
+			'$routeParams'
+		]
 
-		vm.helloWorld = 'Hello World!';
+	function BetsController(Bet, $routeParams) {
+		var vm = this;
+		vm.bets = [];
+		activate();
+
+		function activate() {
+			Bet.query({id: $routeParams.id}, function(data) {
+				vm.bets = data;
+			});
+		}
 	}
 })();

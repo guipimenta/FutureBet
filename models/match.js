@@ -9,7 +9,7 @@ var matchSchema = new Schema({
 	date: Date,
 	home: String,
 	away: String,
-	bets: [betSchema]
+	bets: [{type: Schema.Types.ObjectId, ref:'Bet'}]
 });
 
 // the schema is useless so far

@@ -7,9 +7,9 @@
 
 	function BetsRoutes($routeProvider, $locationProvider) {
 		$routeProvider
-            .when('/bets/:id', {
-                templateUrl: 'partials/bets/bets.html',
-                controller: 'BetsController',
+            .when('/matches', {
+                templateUrl: 'partials/matches/matches.html',
+                controller: 'MatchesController',
 				controllerAs: 'Ctrl'
 			});
 		$locationProvider

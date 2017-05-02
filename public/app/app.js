@@ -4,6 +4,7 @@ var APP_NAME = 'FutureBet';
 	'use strict';
 	angular
 		.module(APP_NAME, [
-			'ngRoute'
+			'ngRoute',
+			'ngResource'
 		]);
 })();

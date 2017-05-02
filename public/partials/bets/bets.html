@@ -1,1 +1,23 @@
-<h1> {{Ctrl.helloWorld}} </h1>
+<div class="row">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Side</th>
+        <th>Value</th>
+        <th>Size</th>
+      </tr>
+    </thead>
+    <tbody >
+        <tr data-ng-repeat="bet in Ctrl.bets">
+          <td>{{ bet.user_id.username }}</td>
+          <td>{{ bet.side  	          }}</td>
+          <td>{{ bet.value            }}</td>
+          <td>{{ bet.qty              }}</td>
+          <td>
+            <a href="bets/{{match._id}}" class="btn btn-xs btn-default">Fill</a>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
