@@ -16,6 +16,7 @@
 		vm.buyBets = [];
         vm.sellBets = [];
 		vm.matchName = "";
+        vm.placeBet = placeBet;
 		activate();
 
 		function activate() {
@@ -25,5 +26,16 @@
 				vm.matchName = data.matchName;
 			});
 		}
+
+        function placeBet() {
+            var bet = new Bet();
+            bet.side = vm.side;
+            bet.size = vm.size;
+            bet.price = vm.price;
+            bet.matchId = $routeParams.id;
+            bet.$place(function() {
+                activate();
+            });
+        }
 	}
 })();

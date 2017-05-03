@@ -46,6 +46,27 @@ app.get('/bets/all/:id', function(req, res) {
 		});
 });
 
+app.post('/bets/place', function(req, res) {
+    var side = req.body.side;
+    var size = req.body.size;
+    var price = req.body.price;
+    var matchId = req.body.matchId;
+    // we need to get user here (need auth system)
+    User
+        .findOne({}, function(err, user){
+            new Bet({
+                _id: mongoose.Types.ObjectId(),
+                user_id: user._id,
+                match_id: matchId,
+                value: price,
+                qty: size,
+                side: side
+            }).save(function() {
+                res.send({status: 'saved'});
+            });
+        });
+});
+
 /**
  * Fetches all matches from database
  */

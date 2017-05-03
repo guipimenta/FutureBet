@@ -13,6 +13,10 @@
             get: {
                 url: 'bets/all/:id',
                 method: 'get'
+            },
+            place: {
+                url: 'bets/place',
+                method: 'post'
             }
         });
     }

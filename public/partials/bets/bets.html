@@ -6,20 +6,20 @@
             <form class="form-inline">
                 <div class="form-group">
                     <label for="side">Side</label>
-                    <select class="form-control" name="singleSelect" ng-model="vm.side">
+                    <select class="form-control" name="singleSelect" ng-model="Ctrl.side">
                       <option value="buy">Buy</option>
                       <option value="sell">Sell</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="price">Price</label>
-                    <input type="number" class="form-control" id="price" ng-model="vm.price">
+                    <input type="number" class="form-control" id="price" ng-model="Ctrl.price">
                 </div>
                 <div class="form-group">
                     <label for="size">Size</label>
-                    <input type="number" class="form-control" id="size" ng-model="vm.size">
+                    <input type="number" class="form-control" id="size" ng-model="Ctrl.size">
                 </div>
-                <button type="submit" class="btn btn-default">Place</button>
+                <button class="btn btn-warning" ng-click="Ctrl.placeBet()">Place</button>
             </form>
         </div>
     </div>
