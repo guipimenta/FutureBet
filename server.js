@@ -27,17 +27,22 @@ connect()
  */
 app.get('/bets/all/:id', function(req, res) {
 	Bet
-		.find({match_id: req.params.id})
+		.find({match_id: req.params.id, side:"buy"})
 		.populate('user_id', 'username')
-		.exec(function(err, bets) {
-			Match
-				.findOne({_id: req.params.id})
-				.exec(function(err, match) {
-					res.send({
-						matchName: match.getMatchName(),
-						bets: bets
-					});
-				});
+		.exec(function(err, buyBets) {
+            Bet.find({match_id: req.params.id, side:"sell"})
+                .populate('user_id', 'username')
+                .exec(function(err, sellBets){
+                Match
+                    .findOne({_id: req.params.id})
+                    .exec(function(err, match) {
+                        res.send({
+                            matchName: match.getMatchName(),
+                            buyBets: buyBets,
+                            sellBets: sellBets
+                        });
+                    });
+            });
 		});
 });
 
