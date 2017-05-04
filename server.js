@@ -38,13 +38,19 @@ app.get('/bets/all/:id', function(req, res) {
                     .exec(function(err, match) {
                         res.send({
                             matchName: match.getMatchName(),
-                            buyBets: buyBets,
-                            sellBets: sellBets
+                            sellBets: sellBets,
+                            buyBets: buyBets
                         });
                     });
             });
 		});
 });
+
+function merge(merged, toMerge, idx) {
+	for(var field in toMerge) {
+		merged[idx + field] = toMerge[field];
+	}
+}
 
 app.post('/bets/place', function(req, res) {
     var side = req.body.side;
