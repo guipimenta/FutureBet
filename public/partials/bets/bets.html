@@ -1,4 +1,4 @@
-<h3>{{Ctrl.matchName}}</h3>
+<h4>{{Ctrl.matchName[0]}}<br>{{Ctrl.matchName[1]}}</h4>
 <br>
 <br>
 <div class="row">
@@ -6,27 +6,20 @@
       <div class="row">
         <div class="panel panel-default">
             <div class="panel-body">
-                <form class="form-inline">
+                <form class="form">
                     <div class="form-group">
                         <label for="side">Side</label>
-                        <div class="btn-group" style="margin:5px 0 10px 0;">
-                          <button type="button" class="btn" ng-class="Ctrl.isBuy ? 'btn-primary' : 'btn-default'" ng-click="Ctrl.isBuy = true">B</button>
-                          <button type="button" class="btn" ng-class="Ctrl.isBuy ? 'btn-default' : 'btn-primary'" ng-click="Ctrl.isBuy = false">S</button>
-                        </div>
+                        <input type="checkbox" name="my-checkbox" data-size='small' data-on-text='B' data-off-text='S' data-off-color="danger" checked>
+                    </div>
+                    <div class="form-group range-slider">
+                        <label for="price">Price: {{Ctrl.price}}&nbsp;&nbsp;</label>
+                        <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="1" data-slider-max="99" data-slider-step="1" data-slider-value="1" ng-model="Ctrl.price" style="width: 100%"/>      
                     </div>
                     <div class="form-group">
-                        <label for="price">Price: {{Ctrl.price}}</label>
-                        <button type="button" class="btn btn-success" ng-click="Ctrl.addPrice(10)">+10</button>
-                        <button type="button" class="btn btn-danger" ng-click="Ctrl.addPrice(-10)">-10</button>
-                        <button type="button" class="btn btn-success" ng-click="Ctrl.addPrice(1)">+1</button>
-                        <button type="button" class="btn btn-danger" ng-click="Ctrl.addPrice(-1)">-1</button>
+                        <label for="size">Size: {{Ctrl.size}} &nbsp;&nbsp;</label>
+                        <input id="ex2" data-slider-id='ex2Slider' type="text" data-slider-min="1" data-slider-max="20" data-slider-step="1" data-slider-value="1" ng-model="Ctrl.size" style="width: 100%"/>  
                     </div>
-                    <div class="form-group">
-                        <label for="size">Size: {{Ctrl.size}}</label>
-                        <button type="button" class="btn btn-success" ng-click="Ctrl.addSize(1)">+1</button>
-                        <button type="button" class="btn btn-danger" ng-click="Ctrl.addSize(-1)">-1</button>
-                    </div>
-                    <button class="btn btn-warning  btn-block" ng-click="Ctrl.placeBet()">Place</button>
+                    <button class="btn btn-warning" ng-click="Ctrl.placeBet()">Place</button>
                 </form>
             </div>
         </div>
@@ -42,8 +35,6 @@
                   <th>User</th>
                   <th>Size</th>
                   <th>Value</th>
-                  <th></th>
-                  <th></th>
                   <th>Value</th>
                   <th>Size</th>
                   <th>User</th>
@@ -53,16 +44,22 @@
 
                   <tr ng-repeat="i in Ctrl.getNumber() track by $index">
                       <td>{{ Ctrl.buyBets[i].user_id.username              }}</td>
-                      <td>{{ Ctrl.buyBets[i].qty              }}</td>
-                      <td>{{ Ctrl.buyBets[i].value            }}</td>
-                      <td><a href="" class="btn btn-sm btn-primary">S</a></td>
-                      <td><a href="" class="btn btn-sm btn-danger">B</a></td>
-                      <td>{{ Ctrl.sellBets[i].value            }}</td>
-                      <td>{{ Ctrl.sellBets[i].qty              }}</td>
-                      <td>{{ Ctrl.sellBets[i].user_id.username              }}</td>
+                      <td>{{ Ctrl.buyBets[i].qty                           }}</td>
+                      <td>{{ Ctrl.buyBets[i].value                         }}</td>
+                      <td>{{ Ctrl.sellBets[i].value                        }}</td>
+                      <td>{{ Ctrl.sellBets[i].qty                          }}</td>
+                      <td>{{ Ctrl.sellBets[i].user_id.username             }}</td>
                   </tr>
               </tbody>
           </table>
         </div>
     </div>
 </div>
+<script>
+$(document).ready(function() {
+            /* Example 1 */
+            $('#ex1').slider({});
+            $('#ex2').slider({});
+            $("[name='my-checkbox']").bootstrapSwitch();
+        });
+</script>

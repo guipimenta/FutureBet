@@ -13,7 +13,10 @@ var matchSchema = new Schema({
 });
 
 matchSchema.methods.getMatchName = function() {
-	return this.name + " - " + this.home + " x " + this.away;
+    var matchName = [];
+    matchName[0] = this.name;
+    matchName[1] = this.home + " x " + this.away;
+	return matchName;
 }
 
 // the schema is useless so far
