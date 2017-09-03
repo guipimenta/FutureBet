@@ -4,16 +4,18 @@ var connect = require('./db');
 var User = require('./models/user');
 var Match = require('./models/match').model;
 var Bet = require('./models/bet').model;
-
+var Side = require('./models/side');
+var MatchEngine = require('./machengine');
+var expressLogging = require('express-logging');
+var logger = require('logops');
 var mongoose = require('mongoose');
 
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use('/', express.static('public'));
 app.use('/static', express.static('bower_components'));
-
+app.use(expressLogging(logger));
 
 connect()
 	.once('open', function() {
@@ -27,10 +29,10 @@ connect()
  */
 app.get('/bets/all/:id', function(req, res) {
 	Bet
-		.find({match_id: req.params.id, side:"buy"})
+		.find({match_id: req.params.id, side: Side.buy, open:true})
 		.populate('user_id', 'username')
 		.exec(function(err, buyBets) {
-            Bet.find({match_id: req.params.id, side:"sell"})
+            Bet.find({match_id: req.params.id, side: Side.sell, open:true})
                 .populate('user_id', 'username')
                 .exec(function(err, sellBets){
                 Match
@@ -57,21 +59,35 @@ app.post('/bets/place', function(req, res) {
     var size = req.body.size;
     var price = req.body.price;
     var matchId = req.body.matchId;
-    // we need to get user here (need auth system)
+    //TODO need to get user
     User
-        .findOne({}, function(err, user){
-            new Bet({
+        .findOne({}, function(err, user) {
+            bet = new Bet({
                 _id: mongoose.Types.ObjectId(),
                 user_id: user._id,
                 match_id: matchId,
                 value: price,
                 qty: size,
-                side: side
-            }).save(function() {
-                res.send({status: 'saved'});
+                side: side,
+                open: true // all bets are open unless matched
+            });
+            getAllBets(function(results) {
+                var oBet = MatchEngine(bet, results);
+                var logText = oBet !== undefined ? "Order matched and filled" : "Order on the book";
+                bet.save(function() {
+                    if(oBet !== undefined) {
+                        oBet.save(function() {
+                            res.send({status: 'filled'});
+                        });
+                    } else {
+                        res.send({status: 'on the book'});
+                    }
+                    //TODO alert if filled
+                });
             });
         });
 });
+
 
 /**
  * Fetches all matches from database
@@ -85,4 +101,16 @@ app.get('/matches/all', function(req, res) {
 app.all('/*', function(req, res, next) {
     res.sendFile('./public/index.html', { root: __dirname });
 });
+
+
+// ======================================
+// some util functions
+// ======================================
+
+function getAllBets(processResults) {
+    return Bet.find({}, function(err, matches) {
+        processResults(matches);
+    });
+}
+
 

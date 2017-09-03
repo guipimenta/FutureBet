@@ -21,6 +21,8 @@
     "express": "^4.15.2"
   },
   "devDependencies": {
+    "express-logging": "^1.1.1",
+    "logops": "^2.1.0",
     "mongoose": "^4.9.6",
     "orm": "^3.2.3",
     "sqlite3": "^3.1.8"

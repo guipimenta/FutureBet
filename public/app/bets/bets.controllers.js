@@ -61,9 +61,13 @@
             });
         }
 
+        function getSide() {
+            return $('#side-checkbox').is(":checked") ? 'buy' : 'sell';
+        }
+
         function placeBet() {
             var bet = new Bet();
-            bet.side = vm.side;
+            bet.side = getSide();
             bet.size = vm.size;
             bet.price = vm.price;
             bet.matchId = $routeParams.id;
