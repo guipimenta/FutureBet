@@ -52,13 +52,16 @@ connect()
 
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
-app.get('/login', function(req, res) {
+// app.get('/login', function(req, res) {
 
-    // render the page and pass in any flash data if it exists
-    res.sendFile('./public/login.html', { root: __dirname});
-});
+//     // render the page and pass in any flash data if it exists
+//     res.sendFile('./public/login.html', { root: __dirname});
+// });
 
 app.all('/*', function(req, res, next) {
+    if(req.user) {
+      res.cookie('user', JSON.stringify(req.user.user_info));
+    }
     res.sendFile('./public/index.html', { root: __dirname});
 });
 

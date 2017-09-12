@@ -3,6 +3,7 @@ var Match           = require('../models/match').model;
 var Bet             = require('../models/bet').model;
 var Side            = require('../models/side');
 var MatchEngine     = require('../machengine');
+var mongoose        = require('mongoose');
 
 module.exports = function(app, passport) {
 
@@ -137,5 +138,5 @@ function isLoggedIn(req, res, next) {
     }
     console.log('user not logged in');
     // if they aren't redirect them to the home page
-    res.redirect('/*');
+    res.send(401);
 }

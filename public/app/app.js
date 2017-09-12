@@ -5,6 +5,8 @@ var APP_NAME = 'FutureBet';
 	angular
 		.module(APP_NAME, [
 			'ngRoute',
-			'ngResource'
+			'ngResource',
+            'ngCookies',
+            'http-auth-interceptor'
 		]);
 })();
